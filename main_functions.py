@@ -37,9 +37,9 @@ import json
 from pprint import pprint
 import argparse
 
-HOST = "****HOST IP***"
-USER = "***USER***"
-PASSWORD = "***PASSWORD***"
+HOST = "change"
+USER = "change"
+PASSWORD = "change"
 
 # Encode HTTP Basic authentication
 ise_user_pwd = str.encode(':'.join((USER, PASSWORD)))
@@ -108,13 +108,18 @@ def get_endpoint_id():
             EP_ID = data['SearchResult']['resources'][i]['id']
     return EP_ID
 
-def delete_endpoint(endpoint_id):
-    if endpoint_id == None:
+def delete_endpoint(mac):
+    data = get_endpoints()
+    EP_ID = None
+    for i in range(0,len(data['SearchResult']['resources'])):
+        if data['SearchResult']['resources'][i]['name'] == mac:
+            EP_ID = data['SearchResult']['resources'][i]['id']  
+
+    if EP_ID == None:
         print("\n OBS!! Seems like endpoint does not exist \n")
     else:
- 
         CRUD = "DELETE"
-        url = "/ers/config/endpoint/{}".format(endpoint_id)
+        url = "/ers/config/endpoint/{}".format(EP_ID)
         payload = None
         delete = ISE_connect(CRUD,url,payload)
 
@@ -177,10 +182,10 @@ if __name__ == '__main__':
         update_endpoint(get_endpoint_id(),mac,name,description)
 
     if args.delete_EP:
-        EP_id = str(input("Enter the endpoint ID: "))
-        answer = str(input("Are you SURE you want to delete EP with ID: {} [yes/no]".format(EP_id)))
+        mac = str(input("(OBS:DELETE) MAC address: "))
+        answer = str(input("Are you SURE you want to delete EP with MAC: {} [yes/no]".format(mac)))
         if answer == "yes":
-            delete_endpoint(EP_id)
+            delete_endpoint(mac)
         else:
             print("\nDELETE operation aborted\n")
 
