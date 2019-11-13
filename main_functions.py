@@ -37,9 +37,9 @@ import json
 from pprint import pprint
 import argparse
 
-HOST = "10.101.1.46"
-USER = "admin"
-PASSWORD = "Wert432!"
+HOST = "****HOST IP***"
+USER = "***USER***"
+PASSWORD = "***PASSWORD***"
 
 # Encode HTTP Basic authentication
 ise_user_pwd = str.encode(':'.join((USER, PASSWORD)))
