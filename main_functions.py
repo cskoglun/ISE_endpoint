@@ -178,7 +178,11 @@ if __name__ == '__main__':
 
     if args.delete_EP:
         EP_id = str(input("Enter the endpoint ID: "))
-        delete_endpoint(EP_id)
+        answer = str(input("Are you SURE you want to delete EP with ID: {} [yes/no]".format(EP_id)))
+        if answer == "yes":
+            delete_endpoint(EP_id)
+        else:
+            print("\nDELETE operation aborted\n")
 
 
 
